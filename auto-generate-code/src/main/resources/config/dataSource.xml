@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sql>
-    <!-- mysqlÊý¾Ý¿âÁ¬½ÓÅäÖÃ -->
+    <!-- mysqlæ•°æ®åº“é…ç½® -->
     <mysql>
         <ip>127.0.0.1</ip>
         <port>3306</port>
@@ -8,7 +8,7 @@
         <username>root</username>
         <password>root</password>
     </mysql>
-    <!-- sqlserverÊý¾Ý¿âÁ¬½ÓÅäÖÃ -->
+    <!-- sqlserveræ•°æ®åº“é…ç½® -->
     <sqlserver>
         <ip>127.0.0.1</ip>
         <port>1433</port>

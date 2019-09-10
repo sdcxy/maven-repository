@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sql>
+    <!-- mysql数据库连接配置 -->
+    <mysql>
+        <ip>127.0.0.1</ip>
+        <port>3306</port>
+        <dbName>template</dbName>
+        <username>root</username>
+        <password>root</password>
+    </mysql>
+    <!-- sqlserver数据库连接配置 -->
+    <sqlserver>
+        <ip>127.0.0.1</ip>
+        <port>1433</port>
+        <dbName>kk2006</dbName>
+        <username>sa</username>
+        <password>123</password>
+    </sqlserver>
+</sql>

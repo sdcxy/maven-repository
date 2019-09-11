@@ -10,11 +10,11 @@ github maven 仓库
 
 # 使用方法
 1.  在pom文件中添加依赖包,还要相应的数据库依赖包
-    <dependency>
+    `<dependency>
       <groupId>com.github.sdcxy</groupId>
       <artifactId>auto-generate-code</artifactId>
       <version>1.0-RELEASE</version>
-    </dependency>
+    </dependency>`
 
 2.  配置数据库
 在resources/config/下创建一个数据库配置文件dataSource.xml

@@ -22,6 +22,12 @@ github maven 仓库
 
 3.  实例化MySqlGenerator 或者 SqlServerGenerator
 默认父级包为: GroupId com.github.sdcxy
+调用AutoGenerateCode方法进行代码生成
+参数说明：
+* parentPackageName：父级包
+* moduleName： 模块名称
+* tableName: 数据库表名(支持字符串或字符串数组)
+* tablePrefix: 数据库表前缀
 
 
 

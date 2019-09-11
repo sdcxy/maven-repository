@@ -246,7 +246,7 @@ public class SuperGenerator {
             packageConfig.setParent(parentPackageName);
         } else {
             // 设置默认父级包
-            packageConfig.setParent("com.sdcxy.lxx");
+            packageConfig.setParent("com.github.sdcxy");
         }
         if (StringUtils.isNotEmpty(moduleName)) {
             // 设置模块名

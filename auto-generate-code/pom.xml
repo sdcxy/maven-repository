@@ -10,8 +10,30 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <artifactId>auto-generate-code</artifactId>
-    <name>auto-generate-code</name>
 
+    <name>auto-generate-code</name>
+    <description>this is a maven repository</description>
+    <url>https://github.com/sdcxy/maven-repository/tree/master/auto-generate-code</url>
+    <licenses>
+        <license>
+            <name>The ApacheSoftware License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>sdcxy</name>
+            <email>2378101302@qq.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <tag>master</tag>
+        <connection>scm:git@github.com:sdcxy/maven-repository.git</connection>
+        <developerConnection>scm:git@github.com:sdcxy/maven-repository.git</developerConnection>
+        <url>https://github.com/sdcxy/maven-repository.git</url>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -58,7 +80,69 @@
     </dependencies>
 
     <build>
-        <finalName>AutoGenerateCode-${project.version}</finalName>
+<!--        <finalName>auto-generate-code-${project.version}</finalName>-->
     </build>
-
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>oss</id>
+            <build>
+                <plugins>
+                    <!--Source-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--javaDoc -->
+                    <!--                    <plugin>-->
+                    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
+                    <!--                        <artifactId>maven-javadoc-plugin</artifactId>-->
+                    <!--                        <version>2.9.1</version>-->
+                    <!--                        <executions>-->
+                    <!--                            <execution>-->
+                    <!--                                <phase>package</phase>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>jar</goal>-->
+                    <!--                                </goals>-->
+                    <!--                            </execution>-->
+                    <!--                        </executions>-->
+                    <!--                    </plugin>-->
+                    <!-- GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

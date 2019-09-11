@@ -21,12 +21,13 @@
     </developers>
 
     <scm>
+        <tag>master</tag>
         <connection>scm:git@github.com:sdcxy/maven-repository.git</connection>
         <developerConnection>scm:git@github.com:sdcxy/maven-repository.git</developerConnection>
-        <url>git@github.com:sdcxy/maven-repository.git</url>
+        <url>https://github.com/sdcxy/maven-repository.git</url>
     </scm>
 
-    <groupId>com.gihub.sdcxy</groupId>
+    <groupId>com.github.sdcxy</groupId>
     <artifactId>maven-repository</artifactId>
     <packaging>pom</packaging>
     <version>1.0-RELEASE</version>
@@ -218,6 +219,58 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>oss</id>
+            <build>
+                <plugins>
+                    <!--Source-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--javaDoc -->
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                        <version>2.9.1</version>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <phase>package</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>jar</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
+                    <!-- GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
 <!--        <plugins>-->

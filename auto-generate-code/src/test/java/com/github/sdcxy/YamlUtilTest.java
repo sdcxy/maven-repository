@@ -1,6 +1,7 @@
 package com.github.sdcxy;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.github.sdcxy.modules.common.util.YamlUtils;
 import com.github.sdcxy.modules.generator.GeneratorFactory;
 import com.github.sdcxy.modules.generator.MySqlGenerator;
 import org.junit.Test;
@@ -23,5 +24,6 @@ public class YamlUtilTest {
     public void test() {
 //        GeneratorFactory generatorFactory = new GeneratorFactory();
 //        generatorFactory.autoGenerateCode("sys_user");
+        YamlUtils.readDataSourceYaml();
     }
 }

@@ -1,5 +1,6 @@
-dataSource:
-  driver-class-name: com.mysql.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false&useUnicode=true&autoReconnect=true&serverTimezone=Asia/Shanghai
-  username: root
-  password: root
+spring:
+  dataSource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false&useUnicode=true&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root

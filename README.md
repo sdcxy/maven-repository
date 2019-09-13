@@ -57,3 +57,5 @@ sqlServer.autoGenerateCode(...params);
 
 4. 配置文件更新为: yml配置 需要在resources/application.yml 或者 resources/dataSource.yml进行配置
 
+* 2019-09-13
+* 修复enums目录结果，修复语法上的错误

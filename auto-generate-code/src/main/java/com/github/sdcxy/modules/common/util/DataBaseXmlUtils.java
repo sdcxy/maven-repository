@@ -2,7 +2,7 @@ package com.github.sdcxy.modules.common.util;
 
 
 import com.github.sdcxy.modules.common.entity.DataSource;
-import lombok.extern.slf4j.Slf4j;
+import com.github.sdcxy.modules.enums.Constants;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -17,34 +17,34 @@ import java.io.FileWriter;
  * @ClassName DataBaseXmlUtils
  * @Description TODO
  * @Author lxx
+ * @version 1.0.0
  * @Date 2019/9/10 0:20
  **/
-@Slf4j
 public class DataBaseXmlUtils {
-    /**
-     *  数据库文件位置
-     */
-    private static final String DEFAULT_DATABASE_XML_PATH = "config/dataSource.xml";
-    // mysql配置参数
-    private static final String MYSQL_DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
+
+
     private static final String MYSQL_URL = "jdbc:mysql://IP:PORT/DB_NAME?characterEncoding=utf8&useSSL=false&useUnicode=true&autoReconnect=true&serverTimezone=Asia/Shanghai";
 
-    // sqlserver配置参数
-    private static final String SQL_SERVER_DRIVER_CLASS_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String SQL_SERVER_URL = "jdbc:sqlserver://IP:PORT;DatabaseName=DB_NAME";
 
 
+    /**
+     *  获取配置文件的路径
+     * @version 1.0.1
+     * @return
+     */
     private static String getDataBaseXmlPath(){
         // 获取根目录的配置文件
-        return System.getProperty("user.dir") + "/src/main/resources/" + DEFAULT_DATABASE_XML_PATH;
+        return System.getProperty("user.dir") + "/src/main/resources/" + Constants.DEFAULT_DATABASE_XML_PATH.getValue();
     }
 
     /**
      *  读取xml 配置文件
      * @param dbType 数据库类型
+     * @version 1.0.0
      * @return
      */
-
+    @Deprecated
     public static DataSource readDataBaseXml(String dbType){
         // 创建一个dataSource实体类来接收数据
         DataSource dataSource = new DataSource();
@@ -58,7 +58,7 @@ public class DataBaseXmlUtils {
             try {
                 throw new FileNotFoundException("文件不存在");
             } catch (FileNotFoundException e) {
-                log.error("{}文件不存在",filePath);
+                System.out.println(filePath + "文件不存在");
             }
         }
         // 读取配置文件
@@ -72,7 +72,7 @@ public class DataBaseXmlUtils {
 
             if (dbType.equals("mysql")) {
                 dbTypeName = root.element("mysql");
-                dataSource.setDriverClassName(MYSQL_DRIVER_CLASS_NAME);
+                dataSource.setDriverClassName(Constants.MYSQL.getValue());
                 dataSource.setUrl(MYSQL_URL.replace("IP",dbTypeName.elementText("ip"))
                         .replace("PORT",dbTypeName.elementText("port"))
                         .replace("DB_NAME",dbTypeName.elementText("dbName")));
@@ -80,7 +80,7 @@ public class DataBaseXmlUtils {
                 dataSource.setPassword(dbTypeName.elementText("password"));
             }else if (dbType.equals("sqlserver")) {
                 dbTypeName = root.element("sqlserver");
-                dataSource.setDriverClassName(SQL_SERVER_DRIVER_CLASS_NAME);
+                dataSource.setDriverClassName(Constants.SQLSERVER.getValue());
                 dataSource.setUrl(SQL_SERVER_URL.replace("IP",dbTypeName.elementText("ip"))
                         .replace("PORT",dbTypeName.elementText("port"))
                         .replace("DB_NAME",dbTypeName.elementText("dbName")));
@@ -90,7 +90,7 @@ public class DataBaseXmlUtils {
             }
 
         } catch (DocumentException e) {
-            log.error("{}",e.getMessage());
+            System.out.println(e.getMessage());
         }
         return dataSource;
     }
@@ -98,8 +98,10 @@ public class DataBaseXmlUtils {
     /**
      *  写入xml
      * @param dbType 数据库类型
+     * @version 1.0.0
      * @param dataSource 写入的数据库参数类
      */
+    @Deprecated
     public static void writeDataBaseXml(String dbType,DataSource dataSource){
 
         String filePath = getDataBaseXmlPath();
@@ -110,7 +112,7 @@ public class DataBaseXmlUtils {
             try {
                 throw new FileNotFoundException("文件不存在");
             } catch (FileNotFoundException e) {
-                log.error("{}文件不存在",filePath);
+                System.out.println(filePath + "文件不存在");
             }
         }
 
@@ -140,7 +142,7 @@ public class DataBaseXmlUtils {
                 dbTypeName.element("dbName").setText(dbName);
                 dbTypeName.element("username").setText(username);
                 dbTypeName.element("password").setText(password);
-                log.info("设置mysql参数成功!-->ip:[{}],port:[{}],dbName:[{}],username:[{}],password:[{}]",ip,port,dbName,username,password);
+//                log.info("设置mysql参数成功!-->ip:[{}],port:[{}],dbName:[{}],username:[{}],password:[{}]",ip,port,dbName,username,password);
 
             } else if(dbType.equals("sqlserver")){
                 dbTypeName = root.element(dbType);
@@ -156,7 +158,7 @@ public class DataBaseXmlUtils {
                 dbTypeName.element("dbName").setText(dbName);
                 dbTypeName.element("username").setText(username);
                 dbTypeName.element("password").setText(password);
-                log.info("设置sqlserver参数成功!-->ip:[{}],port:[{}],dbName:[{}],username:[{}],password:[{}]",ip,port,dbName,username,password);
+//                log.info("设置sqlserver参数成功!-->ip:[{}],port:[{}],dbName:[{}],username:[{}],password:[{}]",ip,port,dbName,username,password);
             }
 
             XMLWriter writer = new XMLWriter(new FileWriter(file));
@@ -164,7 +166,7 @@ public class DataBaseXmlUtils {
             writer.close();
 
         }catch (Exception e){
-            log.error(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
     }

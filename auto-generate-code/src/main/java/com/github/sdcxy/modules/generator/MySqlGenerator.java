@@ -2,6 +2,7 @@ package com.github.sdcxy.modules.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 
 /**
  * @ClassName MySqlGenerator
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
  * @Author lxx
  * @Date 2019/9/9 16:21
  **/
+@Deprecated
 public class MySqlGenerator extends SuperGenerator {
 
     private AutoGenerator autoGenerateCode(String parentPackageName,String moduleName,String tableName,String tablePrefix){

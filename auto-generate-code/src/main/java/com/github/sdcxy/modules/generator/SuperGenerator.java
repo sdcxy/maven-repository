@@ -15,7 +15,8 @@ import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.github.sdcxy.modules.common.entity.DataSource;
 import com.github.sdcxy.modules.common.util.DataBaseXmlUtils;
-import lombok.extern.slf4j.Slf4j;
+import com.github.sdcxy.modules.common.util.YamlUtils;
+import com.github.sdcxy.modules.enums.Constants;
 
 import java.util.*;
 
@@ -26,9 +27,9 @@ import java.util.*;
  * @ClassName SuperGenerator
  * @Description TODO
  * @Author lxx
+ * @version 1.0.0
  * @Date 2019/9/9 14:46
  **/
-@Slf4j
 public class SuperGenerator {
 
     // 自定义模板 默认找templates文件目录下的这些命名文件 只需要配置 xml 自定义位置
@@ -43,48 +44,49 @@ public class SuperGenerator {
 
     /**
      * 获取根目录
-     *
+     * @version 1.0.0
      * @return
      */
     private String getRootPath() {
 //        String file = Objects.requireNonNull(SuperGenerator.class.getClassLoader().getResource("")).getFile();
 //        String rootPath = new File(file).getParentFile().getParentFile().getParent();
         // 通过System.getProperty("user.dir")来获取项目根目录
-        String rootPath = System.getProperty("user.dir");
-        return rootPath;
+        return System.getProperty("user.dir");
     }
 
     /**
      * 获取JAVA目录
-     *
+     * @version 1.0.0
      * @return
      */
     protected String getJavaPath() {
-        String javaPath = getRootPath() + "/src/main/java";
-        log.info("Java目录-->{}",javaPath);
-        return javaPath;
+        return getRootPath() + "/src/main/java";
     }
 
     /**
      * 获取Resource目录
-     *
+     * @version 1.0.0
      * @return
      */
     protected String getResourcePath() {
-        String resourcePath = getRootPath() + "/src/main/resources";
-        log.info("Resource目录-->{}",resourcePath);
-        return resourcePath;
+        return getRootPath() + "/src/main/resources";
     }
 
 
     /**
      *  获取 dataSourceConfig
      * @param dbType 数据库类型
+     * @version 1.0.0
      * @return
      */
+    @Deprecated
     protected DataSourceConfig getDataSourceConfig(DbType dbType) {
         // 读取配置文件的dataSource.xml 返回dataSource
-        DataSource dataSource = DataBaseXmlUtils.readDataBaseXml(dbType.getDb());
+        DataSource dataSource  = YamlUtils.readDataSourceYaml();
+
+        if (dataSource == null) {
+            dataSource = DataBaseXmlUtils.readDataBaseXml(dbType.getDb());
+        }
         // 实例化generator dataSourceConfig
         DataSourceConfig dataSourceConfig =  new DataSourceConfig();
             dataSourceConfig
@@ -134,8 +136,76 @@ public class SuperGenerator {
         return dataSourceConfig;
     }
 
+
+    /**
+     *  获取 dataSourceConfig
+     * @version 1.0.1
+     * @return
+     */
+    protected DataSourceConfig getDataSourceConfig() {
+        DataSource dataSource = YamlUtils.readDataSourceYaml();
+        // 实例化generator dataSourceConfig
+        DataSourceConfig dataSourceConfig =  new DataSourceConfig();
+        if (dataSource != null) {
+            if (dataSource.getDriverClassName().equals(Constants.MYSQL.getValue()) || dataSource.getDriverClassName().equals(Constants.MYSQL_PLUS.getValue()) ){
+                // 设置数据库类型
+                dataSourceConfig.setDbType(DbType.MYSQL);
+                // 数据库类型的转换
+                dataSourceConfig.setTypeConvert(new MySqlTypeConvert(){
+                    @Override
+                    public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
+                        //  数据库类型转换
+                        if (fieldType.toLowerCase().equals("bit")) {
+                            return DbColumnType.BOOLEAN;
+                        }
+                        if (fieldType.toLowerCase().equals("date")) {
+                            return DbColumnType.LOCAL_DATE;
+                        }
+                        if (fieldType.toLowerCase().equals("time")) {
+                            return DbColumnType.LOCAL_TIME;
+                        }
+                        if (fieldType.toLowerCase().equals("tinyint")) {
+                            return DbColumnType.BOOLEAN;
+                        }
+                        if (fieldType.toLowerCase().equals("datetime")) {
+                            return DbColumnType.LOCAL_DATE_TIME;
+                        }
+                        return super.processTypeConvert(globalConfig, fieldType);
+                    }
+                });
+            }else if (dataSource.getDriverClassName().equals(Constants.SQLSERVER.getValue())){
+                // 设置数据库类型
+                dataSourceConfig.setDbType(DbType.SQL_SERVER);
+                // 数据库类型转换
+                dataSourceConfig.setTypeConvert(new SqlServerTypeConvert(){
+                    @Override
+                    public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
+                        return super.processTypeConvert(globalConfig, fieldType);
+                    }
+                });
+            } else {
+                throw new RuntimeException("NotFound Driver-Class-Name,Please Check It");
+            }
+            dataSourceConfig
+                    // 设置数据库url
+                    .setUrl(dataSource.getUrl())
+                    // 设置数据库用户名
+                    .setUsername(dataSource.getUsername())
+                    // 设置数据库密码
+                    .setPassword(dataSource.getPassword())
+                    // 设置数据库driver
+                    .setDriverName(dataSource.getDriverClassName());
+        } else {
+            // dataSource 为null 则默认找 getDataSourceConfig(DbType.MYSQL);
+            dataSourceConfig = getDataSourceConfig(DbType.MYSQL);
+        }
+        // 返回 generator的dataSourceConfig
+        return dataSourceConfig;
+    }
+
     /**
      * 获取TableFill策略
+     * @version 1.0.0
      * @return
      */
     protected List<TableFill> getTableFills() {
@@ -150,6 +220,7 @@ public class SuperGenerator {
 
     /**
      * 获取 StrategyConfig 生成策略配置
+     * @version 1.0.0
      * @param tableNames 数据库表名
      * @param tablePrefix 数据库表前缀
      * @return
@@ -187,6 +258,7 @@ public class SuperGenerator {
 
     /**
      *  获取 StrategyConfig 生成策略配置
+     * @version 1.0.0
      * @param tableNames 数据库表名
      * @param tablePrefix 数据库表前缀
      * @return
@@ -224,6 +296,7 @@ public class SuperGenerator {
 
     /**
      *  获取 PackageConfig
+     * @version 1.0.0
      * @param parentPackageName 父级包
      * @param moduleName 模块名
      * @return
@@ -259,6 +332,7 @@ public class SuperGenerator {
 
     /**
      *  获取 GlobalConfig
+     * @version 1.0.0
      * @return
      */
     protected GlobalConfig getGlobalConfig(){
@@ -296,6 +370,7 @@ public class SuperGenerator {
 
     /**
      *  获取 TemplateConfig
+     * @version 1.0.0
      * @return
      */
     protected TemplateConfig getTemplateConfig(){
@@ -306,6 +381,7 @@ public class SuperGenerator {
 
     /**
      * 获取 InjectionConfig 自定义配置
+     * @version 1.0.0
      * @return
      */
     protected InjectionConfig getInjectionConfig(){
@@ -321,9 +397,7 @@ public class SuperGenerator {
             // 自定义mapper.xml输出目录 resources/mapper/tableInfo.getEntityName().xml
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String mapperXmlPath = getResourcePath() + "/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
-                log.info("Mapper.xml存放目录-->{}",mapperXmlPath);
-                return mapperXmlPath;
+                return  getResourcePath() + "/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         }));
     }
@@ -336,8 +410,10 @@ public class SuperGenerator {
      * @param tableNames 数据库表名
      * @param tablePrefix 数据库表名前缀
      * @param dbType 数据库类型
+     * @version 1.0.0
      * @return
      */
+    @Deprecated
     public AutoGenerator getAutoGenerator(String parentPackageName,String moduleName,
                                           String[] tableNames,String[] tablePrefix,DbType dbType
                                           ){
@@ -364,8 +440,10 @@ public class SuperGenerator {
      * @param tableNames 数据库表名
      * @param tablePrefix 数据库表名前缀
      * @param dbType 数据库类型
+     * @version 1.0.0
      * @return
      */
+    @Deprecated
     public AutoGenerator getAutoGenerator(String parentPackageName, String moduleName,
                                           String tableNames,String tablePrefix,DbType dbType
                                           ){
@@ -382,6 +460,61 @@ public class SuperGenerator {
                 .setStrategy(getStrategyConfig(tableNames,tablePrefix))
                 // 配置数据源
                 .setDataSource(getDataSourceConfig(dbType));
+    }
 
+
+    /**
+     *  获取 AutoGenerator
+     * @param parentPackageName 父级包
+     * @param moduleName 模块名
+     * @param tableNames 数据库表名
+     * @param tablePrefix 数据库表名前缀
+     * @version 1.0.1
+     * @return
+     */
+    public AutoGenerator getAutoGenerator(String parentPackageName,String moduleName,
+                                          String[] tableNames,String[] tablePrefix
+    ){
+        return new AutoGenerator()
+                // 全局配置
+                .setGlobalConfig(getGlobalConfig())
+                // 包名配置
+                .setPackageInfo(getPackageConfig(parentPackageName,moduleName))
+                // 模板配置
+                .setTemplate(getTemplateConfig())
+                // 自定义配置
+                .setCfg(getInjectionConfig())
+                //策略配置
+                .setStrategy(getStrategyConfig(tableNames,tablePrefix))
+                // 配置数据源
+                .setDataSource(getDataSourceConfig());
+
+    }
+
+    /**
+     *  获取 AutoGenerator
+     * @param parentPackageName 父级包
+     * @param moduleName 模块名
+     * @param tableNames 数据库表名
+     * @param tablePrefix 数据库表名前缀
+     * @version 1.0.1
+     * @return
+     */
+    public AutoGenerator getAutoGenerator(String parentPackageName, String moduleName,
+                                          String tableNames,String tablePrefix
+    ){
+        return new AutoGenerator()
+                // 全局配置
+                .setGlobalConfig(getGlobalConfig())
+                // 包名配置
+                .setPackageInfo(getPackageConfig(parentPackageName,moduleName))
+                // 模板配置
+                .setTemplate(getTemplateConfig())
+                // 自定义配置
+                .setCfg(getInjectionConfig())
+                // 策略配置
+                .setStrategy(getStrategyConfig(tableNames,tablePrefix))
+                // 配置数据源
+                .setDataSource(getDataSourceConfig());
     }
 }

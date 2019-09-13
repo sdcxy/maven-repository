@@ -16,14 +16,15 @@
     ```
 
 2.  配置数据库
-在resources/config/下创建一个数据库配置文件**dataSource.xml**
-配置查看源代码的xml文件
+* @version-1.0.0 版本 在resources/config/下创建一个数据库配置文件 dataSource.xml
+
 
 3.  实例化MySqlGenerator 或者 SqlServerGenerator
 ```
 MySqlGenerator mySql = new MySqlGenerator();
 SqlServerGenerator sqlServer = new SqlServerGenerator();
 ```
+
 * 默认父级包为:  ***com.github.sdcxy***
 * 调用AutoGenerateCode方法进行代码生成
 ```
@@ -38,5 +39,21 @@ sqlServer.autoGenerateCode(...params);
 * tablePrefix: 数据库表前缀
 ```
 
+# 版本说明
+* 2019-09-11
+1. 更新版本1.0.0 配置方式按照上面说明
 
+* 2019-09-13
+1. 版本1.0.0 中的xml配置方法已经被弃用了，建议使用yml配置方式
+2. 版本1.0.1 启用yml的数据库配置方式,无需配置数据库类型，会自动根据driver-class-name 判断数据库类型
+    ```$xslt
+        dataSource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false&useUnicode=true&autoReconnect=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: root
+    ```
+3. 弃用MySqlGenerator和SqlServerGenerator类，使用GeneratorFactory类代替，使用方法还是一样
+
+4. 配置文件更新为: yml配置 需要在resources/application.yml 或者 resources/dataSource.yml进行配置
 

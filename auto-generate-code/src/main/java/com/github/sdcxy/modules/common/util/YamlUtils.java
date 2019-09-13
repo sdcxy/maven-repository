@@ -1,7 +1,7 @@
 package com.github.sdcxy.modules.common.util;
 
 import com.github.sdcxy.modules.common.entity.DataSource;
-import com.github.sdcxy.modules.enums.Constants;
+import com.github.sdcxy.modules.common.enums.Constants;
 import org.ho.yaml.Yaml;
 
 import java.io.File;
@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @ClassName YamlUtils
- * @Description TODO
- * @Author lxx
+ * @className YamlUtils
+ * @description TODO
+ * @author lxx
  * @version 1.0.1
- * @Date 2019/9/12 9:20
+ * @date 2019/9/12 9:20
  **/
 public class YamlUtils {
 
@@ -26,7 +26,7 @@ public class YamlUtils {
         DataSource dataSource = null;
         // 获取文件路径
         String applicationYaml = System.getProperty("user.dir") + "/src/main/resources/" + Constants.DEFAULT_APPLICATION_YAML_PATH.getValue();
-        String dataSourceYaml = System.getProperty("user.dir") + "/src/main/resources/" + Constants.DEFAULT_DATSOURCE_YAML_PATH.getValue();
+        String dataSourceYaml = System.getProperty("user.dir") + "/src/main/resources/" + Constants.DEFAULT_DATASOURCE_YAML_PATH.getValue();
 
         File applicationFile = new File(applicationYaml);
         File dataSourceFile = new File(dataSourceYaml);

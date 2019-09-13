@@ -14,9 +14,9 @@ import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.github.sdcxy.modules.common.entity.DataSource;
+import com.github.sdcxy.modules.common.enums.Constants;
 import com.github.sdcxy.modules.common.util.DataBaseXmlUtils;
 import com.github.sdcxy.modules.common.util.YamlUtils;
-import com.github.sdcxy.modules.enums.Constants;
 
 import java.util.*;
 
@@ -24,11 +24,11 @@ import java.util.*;
  <p>
     代码生成器父类
  </p>
- * @ClassName SuperGenerator
- * @Description TODO
- * @Author lxx
+ * @className SuperGenerator
+ * @description TODO
+ * @author lxx
  * @version 1.0.0
- * @Date 2019/9/9 14:46
+ * @date 2019/9/9 14:46
  **/
 public class SuperGenerator {
 

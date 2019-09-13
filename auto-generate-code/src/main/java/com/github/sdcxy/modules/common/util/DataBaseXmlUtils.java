@@ -2,7 +2,7 @@ package com.github.sdcxy.modules.common.util;
 
 
 import com.github.sdcxy.modules.common.entity.DataSource;
-import com.github.sdcxy.modules.enums.Constants;
+import com.github.sdcxy.modules.common.enums.Constants;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -14,11 +14,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 
 /**
- * @ClassName DataBaseXmlUtils
- * @Description TODO
- * @Author lxx
+ * @className DataBaseXmlUtils
+ * @description TODO
+ * @author lxx
  * @version 1.0.0
- * @Date 2019/9/10 0:20
+ * @date 2019/9/10 0:20
  **/
 public class DataBaseXmlUtils {
 

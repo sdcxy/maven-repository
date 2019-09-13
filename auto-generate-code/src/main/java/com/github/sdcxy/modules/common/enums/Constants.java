@@ -1,19 +1,21 @@
-package com.github.sdcxy.modules.enums;
+package com.github.sdcxy.modules.common.enums;
+
+
 
 /**
- * @ClassName Constants
- * @Description TODO
- * @Author lxx
+ * @className Constants
+ * @description TODO
+ * @author lxx
  * @version 1.0.1
- * @Date 2019/9/12 9:23
+ * @date 2019/9/12 9:23
  **/
-
 public enum Constants {
+
     /**
      *  数据库配置文件常量
      */
     DEFAULT_DATABASE_XML_PATH("config/dataSource.xml"),
-    DEFAULT_DATSOURCE_YAML_PATH("/dataSource.yml"),
+    DEFAULT_DATASOURCE_YAML_PATH("/dataSource.yml"),
     DEFAULT_APPLICATION_YAML_PATH("/application.yml"),
 
     /**

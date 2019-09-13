@@ -41,21 +41,21 @@ sqlServer.autoGenerateCode(...params);
 
 # 版本说明
 * 2019-09-11
-1. 更新版本1.0.0 配置方式按照上面说明
+    1. 更新版本1.0.0 配置方式按照上面说明
 
 * 2019-09-13
-1. 版本1.0.0 中的xml配置方法已经被弃用了，建议使用yml配置方式
-2. 版本1.0.1 启用yml的数据库配置方式,无需配置数据库类型，会自动根据driver-class-name 判断数据库类型
-    ```$xslt
-        dataSource:
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false&useUnicode=true&autoReconnect=true&serverTimezone=Asia/Shanghai
-        username: root
-        password: root
-    ```
-3. 弃用MySqlGenerator和SqlServerGenerator类，使用GeneratorFactory类代替，使用方法还是一样
-
-4. 配置文件更新为: yml配置 需要在resources/application.yml 或者 resources/dataSource.yml进行配置
+    1. 版本1.0.0 中的xml配置方法已经被弃用了，建议使用yml配置方式
+    2. 版本1.0.1 启用yml的数据库配置方式,无需配置数据库类型，会自动根据driver-class-name 判断数据库类型
+        ```$xslt
+            dataSource:
+            driver-class-name: com.mysql.jdbc.Driver
+            url: jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false&useUnicode=true&autoReconnect=true&serverTimezone=Asia/Shanghai
+            username: root
+            password: root
+        ```
+    3. 弃用MySqlGenerator和SqlServerGenerator类，使用GeneratorFactory类代替，使用方法还是一样
+    
+    4. 配置文件更新为: yml配置 需要在resources/application.yml 或者 resources/dataSource.yml进行配置
 
 * 2019-09-13
-* 修复enums目录结果，修复语法上的错误
+    * 修复enums目录结果，修复语法上的错误

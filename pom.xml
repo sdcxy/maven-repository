@@ -30,7 +30,7 @@
     <groupId>com.github.sdcxy</groupId>
     <artifactId>maven-repository</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <modules>
         <module>auto-generate-code</module>
     </modules>

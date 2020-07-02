@@ -64,7 +64,7 @@
 
         <!-- 数据库 -->
         <sqlserver.version>4.0</sqlserver.version>
-        <mysql.version>5.1.47</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <mybatis.version>2.0.1</mybatis.version>
         <baomidou.mybatis.plus.version>3.2.0</baomidou.mybatis.plus.version>
         <apache.velocity.version>1.7</apache.velocity.version>
